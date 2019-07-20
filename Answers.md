@@ -8,15 +8,18 @@
 1.  Describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
     actions = dispatched to our reducer or passed in to the reducer function as an argument.
     reducers = calculate new version of state based on current state and a given Action. they NEVER update state directly, but will always return a new object.
-    store = 
+    store = holds the whole state tree of your application.  the only way to change the state inside it i to dispatch an action on it.
 
 1.  What is the difference between Application state and Component state? When would be a good time to use one over the other?
+    Application state = 
 
+    Component state = 
 
 1.  What is middleware?
-
+    provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.  Used for logging, crash reporting, talking to an asynchronous API, and routing.
 
 1.  Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
-
+    commonly used middleware for asynchronous orchestration.  A thunk is a function that returns another function that takes parameters "dispatch" and "getState."
 
 1.  Which `react-redux` method links up our `components` with our `redux store`?
+    connect method is the only way to link our components to the redux store.  it maps the stores state and dispatch to the props of a component.
