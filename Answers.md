@@ -11,9 +11,14 @@
     store = holds the whole state tree of your application.  the only way to change the state inside it i to dispatch an action on it.
 
 1.  What is the difference between Application state and Component state? When would be a good time to use one over the other?
-    Application state = 
+    Application state = this is all about the state tree, within the store.  the important parts of the store are:
+        -getting the state
+        -listening for changes
+        -updating the state
+    It is good to use this once you begin building your React-Redux app
 
-    Component state = 
+    Component state = setState() schedules an update to a component's state object.  What state changes, the component responds by re-rendering.
+    The best time to use component state is when you are changing the state of a specific component
 
 1.  What is middleware?
     provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.  Used for logging, crash reporting, talking to an asynchronous API, and routing.
