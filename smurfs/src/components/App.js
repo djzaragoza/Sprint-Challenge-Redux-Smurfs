@@ -77,6 +77,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(
-  mapStateProps,
+  mapStateToProps,
   { getSmurfs, addSmurf, deleteSmurf }
 )(App);
