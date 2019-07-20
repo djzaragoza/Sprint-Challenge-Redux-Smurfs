@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import './App.css';
-
-import { getSmurfs, addSmurf, deleteSmurf } from '../actions';
+import { connect } from 'react-redux';
+import { getSmurfs, addSmurfs, updateSmurfs, deleteSmurfs } from '../actions';
+import { GlobalStyle, AppContainer, H1 } from '../styles';
+import Village from './Village';
 /*
  to wire this component up you're going to need a few things.
  I'll let you do this part on your own. 
@@ -10,73 +11,108 @@ import { getSmurfs, addSmurf, deleteSmurf } from '../actions';
  `How do I ensure that my component links the state to props?`
  */
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      name: '',
-      age: '',
-      height: ''
-    }
+      smurf: {
+        name: '',
+        age: '',
+        height: ''
+      },
+      mode: 'Add',
+      id: ''
+    };
   }
 
   componentDidMount() {
     this.props.getSmurfs();
   }
 
-  changeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value})
-  }
+  addSmurf = event => {
+    event.preventDefault();
+    this.props.addSmurfs(this.state.smurf);
+    this.defaultForm();
+  };
 
-  addSmurf = e => {
-    e.preventDefault();
-    const newSmurf = {
-      name: this.state.name,
-      age: this.state.age,
-      height: this.state.height
-    }
-    this.props.addSmurf(newSmurf);
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    })
-  }
+  updateSmurf = () => {
+    this.props.updateSmurfs(this.state.smurf, this.state.id);
+    this.defaultForm();
+  };
 
   deleteSmurf = id => {
-    this.props.deleteSmurf(id);
-  }
+    this.props.deleteSmurfs(id);
+  };
+
+  toggleMode = (id, name) => {
+    this.setState({
+      ...this.state,
+      mode: 'Update',
+      id: id,
+      smurf: {
+        ...this.state.smurf,
+        name: name
+      }
+    });
+  };
+
+  defaultForm = () => {
+    this.setState({
+      ...this.state,
+      mode: 'Add',
+      smurf: {
+        ...this.state.smurf,
+        name: '',
+        age: '',
+        height: ''
+      }
+    });
+  };
+  handleChange = event => {
+    event.preventDefault();
+    this.setState({
+      smurf: {
+        ...this.state.smurf,
+        [event.target.name]: event.target.value
+      }
+    });
+  };
 
   render() {
     return (
-      <div className="App">
-        <h1>SMURFS! 2.0 W/ Redux</h1>
-        {this.props.smurfs.map(smurf => {
-          return (
-            <div>
-              <h3>{smurf.name}</h3>
-              <p>{smurf.age}</p>
-              <p>{smurf.height}</p>
-              <button onClick={() => this.deleteSmurf(smurf.id)}>X</button>
-              </div>
-          )
-        })}
-        <form onSubmit={this.addSmurf}>
-          <input type="text" value={this.state.name} name="name" onChange={this.changeHandler} placeholder="name" />
-          <input type="text" value={this.state.age} name="age" onChange={this.changeHandler} placeholder="age" />
-          <input type="text" value={this.state.height} name="height" onChange={this.changeHandler} placeholder="height" />
-          <button type="submit">Add a cool Smurf!</button>
-        </form>
-      </div>
+      <React.Fragment>
+        <GlobalStyle />
+        <AppContainer>
+          <H1>Welcome to Smurf Village</H1>
+          <Village
+            mode={this.state.mode}
+            toggleMode={this.toggleMode}
+            handleChange={this.handleChange}
+            name={this.state.smurf.name}
+            age={this.state.smurf.age}
+            height={this.state.smurf.height}
+            addSmurf={this.addSmurf}
+            updateSmurf={this.updateSmurf}
+            deleteSmurf={this.deleteSmurf}
+            smurfs={this.props.smurfs}
+            defaultForm={this.defaultForm}
+          />
+        </AppContainer>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
   smurfs: state.smurfs,
-  editMode: state.editMode
-})
+  fetchingSmurfs: state.fetchingSmurfs
+});
 
 export default connect(
   mapStateToProps,
-  { getSmurfs, addSmurf, deleteSmurf }
+  {
+    getSmurfs,
+    addSmurfs,
+    updateSmurfs,
+    deleteSmurfs
+  }
 )(App);
