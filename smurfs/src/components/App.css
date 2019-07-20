@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  color: dodgerblue;
 }
 
 .App-logo {
@@ -15,11 +16,17 @@
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .App-intro {
   font-size: large;
+}
+
+button {
+  color: solid black;
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
 @keyframes App-logo-spin {

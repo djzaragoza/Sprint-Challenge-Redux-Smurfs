@@ -51,7 +51,7 @@ class App extends Component {
               <h3>{smurf.name}</h3>
               <p>{smurf.age}</p>
               <p>{smurf.height}</p>
-              <button onClick={() => this.deleteSmurf(smurf.id)}>X</button>
+              <button onClick={() => this.deleteSmurf(smurf.id)}>DELETE</button>
             </div>
           )
         })}
