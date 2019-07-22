@@ -55,7 +55,7 @@ class App extends Component {
             </div>
           )
         })}
-        <form onSubmit={this.addSmurf}>
+        <form onSubmit={this.addSmurf}> 
           <input
             type='text'
             value={this.state.name}
